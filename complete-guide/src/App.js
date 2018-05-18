@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import UserOutput from './UserOutput/UserOutput';
+import UserInput from './UserInput/UserInput';
 
 class App extends Component {
   state = {
       persons: [
           {name: 'Ellen', age: 29},
           {name: 'Erik', age: 30},
+      ],
+      usernames: [
+          'username1',
+          'username2',
       ]
   };
 
@@ -17,7 +23,7 @@ class App extends Component {
           {name: 'Ellen', age: 25},
           {name: 'Erik', age: 35},
         ]
-      })
+      });
   };
 
   nameChangeHandler = (event) => {
@@ -26,7 +32,16 @@ class App extends Component {
               {name: 'Ellen', age: 29},
               {name: event.target.value, age:30}
           ]
-      })
+      });
+  };
+
+  usernameChangeHandler = (e) => {
+      this.setState({
+          usernames: [
+              e.target.value,
+              'username same'
+          ]
+      });
   };
 
   render() {
@@ -59,6 +74,9 @@ class App extends Component {
         >
             This is where the props.children comes from
         </Person>
+        <UserOutput username={this.state.usernames[0]}/>
+        <UserOutput username={this.state.usernames[1]}/>
+        <UserInput changeUsername={this.usernameChangeHandler} username={this.state.usernames[0]}/>
       </div>
     );
   }
