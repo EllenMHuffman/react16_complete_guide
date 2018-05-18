@@ -13,17 +13,13 @@ class App extends Component {
       usernames: [
           'username1',
           'username2',
-      ]
+      ],
+      showPersons: false,
   };
 
-  switchNameHandler = () => {
-      console.log('Was clicked!');
-      this.setState({
-        persons: [
-          {name: 'Ellen', age: 25},
-          {name: 'Erik', age: 35},
-        ]
-      });
+  togglePersonsHandler = () => {
+      const doesShow = this.state.showPersons
+      this.setState({showPersons: !doesShow});
   };
 
   nameChangeHandler = (event) => {
@@ -53,27 +49,30 @@ class App extends Component {
           cursor: 'pointer'
       };
 
+      let persons = null;
+
+      if (this.state.showPersons) {
+          persons = (
+              <div>
+                  {this.state.persons.map(person => {
+                      return <Person
+                          name={person.name}
+                          age={person.age}/>
+                  })}
+              </div>
+          )
+      }
+
     return (
       <div className="App">
         <h1>I'm a react app</h1>
           <button
               style={style}
-              onClick={this.switchNameHandler}
+              onClick={this.togglePersonsHandler}
           >
-              Switch Name
+              Show People
           </button>
-        <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-            click={this.switchNameHandler}
-        />
-        <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            changeName={this.nameChangeHandler}
-        >
-            This is where the props.children comes from
-        </Person>
+          {persons}
         <UserOutput username={this.state.usernames[0]}/>
         <UserOutput username={this.state.usernames[1]}/>
         <UserInput changeUsername={this.usernameChangeHandler} username={this.state.usernames[0]}/>
