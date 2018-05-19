@@ -7,8 +7,8 @@ import UserInput from './UserInput/UserInput';
 class App extends Component {
   state = {
       persons: [
-          {name: 'Ellen', age: 29},
-          {name: 'Erik', age: 30},
+          {id: 1,name: 'Ellen', age: 29},
+          {id: 2,name: 'Erik', age: 30},
       ],
       usernames: [
           'username1',
@@ -22,13 +22,28 @@ class App extends Component {
       this.setState({showPersons: !doesShow});
   };
 
-  nameChangeHandler = (event) => {
-      this.setState({
-          persons: [
-              {name: 'Ellen', age: 29},
-              {name: event.target.value, age:30}
-          ]
+  nameChangeHandler = (e, id) => {
+      const personIndex = this.state.persons.findIndex(p => {
+          return p.id === id;
       });
+
+      const person = {
+          ...this.state.persons[personIndex]
+      };
+
+      person.name = e.target.value;
+
+      const persons = [...this.state.persons];
+      persons[personIndex] = person;
+
+      this.setState({persons: persons});
+  };
+
+  deletePersonHandler = (personIndex) => {
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
   };
 
   usernameChangeHandler = (e) => {
@@ -54,10 +69,14 @@ class App extends Component {
       if (this.state.showPersons) {
           persons = (
               <div>
-                  {this.state.persons.map(person => {
+                  {this.state.persons.map((person, index) => {
                       return <Person
+                          key={person.id}
+                          click={() => this.deletePersonHandler(index)}
                           name={person.name}
-                          age={person.age}/>
+                          age={person.age}
+                          changeName={(e) => this.nameChangeHandler(e, person.id)}
+                      />
                   })}
               </div>
           )
