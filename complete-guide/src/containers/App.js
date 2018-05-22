@@ -6,17 +6,30 @@ import UserOutput from '../components/UserOutput/UserOutput';
 import UserInput from '../components/UserInput/UserInput';
 
 class App extends Component {
-    state = {
-        persons: [
-            {id: 1,name: 'Ellen', age: 29},
-            {id: 2,name: 'Erik', age: 30},
-        ],
-        usernames: [
-            'username1',
-            'username2',
-        ],
-        showPersons: false,
-    };
+    constructor(props) {
+        super(props);
+        console.log('App.js constructor', props);
+
+        this.state = {
+            persons: [
+                {id: 1,name: 'Ellen', age: 29},
+                {id: 2,name: 'Erik', age: 30},
+            ],
+            usernames: [
+                'username1',
+                'username2',
+            ],
+            showPersons: false,
+        };
+    }
+
+    componentWillMount() {
+        console.log('App.js componentWillMount');
+    }
+
+    componentDidMount() {
+        console.log('App.js componentDidMount');
+    }
 
     togglePersonsHandler = () => {
         const doesShow = this.state.showPersons
@@ -57,6 +70,7 @@ class App extends Component {
     };
 
     render() {
+        console.log('App.js render')
         let persons = null;
 
         if (this.state.showPersons) {
@@ -71,6 +85,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Cockpit
+                    appTitle={this.props.title}
                     showPersons={this.state.showPersons}
                     persons={this.state.persons}
                     clicked={this.togglePersonsHandler} />

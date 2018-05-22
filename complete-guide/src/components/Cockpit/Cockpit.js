@@ -23,7 +23,7 @@ const cockpit = (props) => {
 
     return (
         <div className={'cockpit'}>
-            <h1>I'm a react app</h1>
+            <h1>{props.appTitle}</h1>
             <p className={classes.join(' ')}>Here we go</p>
             <button
                 style={style}
