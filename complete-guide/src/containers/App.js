@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import WithClass from '../hoc/WithClass';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
 import UserOutput from '../components/UserOutput/UserOutput';
@@ -83,7 +84,7 @@ class App extends Component {
 
 
         return (
-            <div className="App">
+            <WithClass classes={'App'}>
                 <Cockpit
                     appTitle={this.props.title}
                     showPersons={this.state.showPersons}
@@ -93,7 +94,7 @@ class App extends Component {
                 <UserOutput username={this.state.usernames[0]}/>
                 <UserOutput username={this.state.usernames[1]}/>
                 <UserInput changeUsername={this.usernameChangeHandler} username={this.state.usernames[0]}/>
-            </div>
+            </WithClass>
         );
     }
 }
