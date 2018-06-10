@@ -75,7 +75,31 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        alert('You continue!');
+        const url = 'https://burgerbuilder-ea147.firebaseio.com/orders.json';
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Test Name',
+                address: {
+                    street: 'Aaaaab 1',
+                    zipCode: '12345',
+                    country: 'USA',
+                },
+                email: 'test@test.com',
+            },
+            deliveryMethod: 'fastest',
+        };
+
+        fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(order),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     };
 
     render () {
